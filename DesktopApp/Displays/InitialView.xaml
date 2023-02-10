@@ -1,0 +1,53 @@
+﻿<mah:MetroWindow x:Class="DesktopApp.InitialView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Height="500" Width="1200" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                  WindowStartupLocation="CenterScreen"  ShowIconOnTitleBar="False"
+                  WindowState="Maximized" Title="Initial View">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="Black" BorderThickness="0 0 1 0">
+                <StackPanel Margin="5 5 10 5">
+                    <icons:PackIconMaterial Kind="Menu" Height="35" Width="35" Margin="2" 
+                                              cal:Message.Attach="[Event MouseDown] = [Action ToggleMenu]"/>
+
+                    <ContentControl x:Name="MenuItem" />
+
+                    <ItemsControl ItemsSource="{Binding MenuItemViewModelSet}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl x:Name="MenuItem" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="{Binding MenuButtonsAreVisible, Converter={StaticResource ResourceKey=BoolToVis}}" />
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+
+            </Border>
+        </Grid>
+
+        <ContentControl x:Name="ActiveItem" Grid.Column="1"/>
+    </Grid>
+</mah:MetroWindow>
